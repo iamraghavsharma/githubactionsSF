@@ -1,8 +1,7 @@
 name: 'SalesforceCI'
 
-on: 
-  push:
-    branches: [dev,main]
+on: [push]
+   
     
 jobs:
   build:
