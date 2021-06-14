@@ -30,7 +30,7 @@ jobs:
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all 
           git --no-pager diff --name-status origin/${GITHUB_HEAD_REF##*/} origin/dev
-          sgd --to origin/${GITHUB_REF##*/} --from origin/dev  --output .
+          sgd --to origin/${GITHUB_HEAD_REF##*/} --from origin/dev  --output .
           cat package/package.xml               
       - name: Print 
         run: |
