@@ -22,6 +22,6 @@ jobs:
           npm install sfdx-cli --global
           sudo npm install sfdx-git-delta@latest -g
       - name: Proess Scratch org
-         run:'echo scratch org processed'
+        run: 'echo scratch org processed'
  
 
