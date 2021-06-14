@@ -29,13 +29,13 @@ jobs:
         run: |
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all 
-          git --no-pager diff --name-status origin/${GITHUB_REF##*/} origin/dev
+          git --no-pager diff --name-status origin/${GITHUB_HEAD_REF##*/} origin/dev
           sgd --to origin/${GITHUB_REF##*/} --from origin/dev  --output .
           cat package/package.xml               
       - name: Print 
         run: |
           echo $GITHUB_REF
-          echo $github.ref
+          echo $GITHUB_HEAD_REF
           echo $GITHUB_REF^ 
           echo "--- package.xml generated with added and modified metadata ---"
           cat package/package.xml
