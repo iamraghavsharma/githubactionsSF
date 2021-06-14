@@ -1,10 +1,7 @@
 name: 'SalesforceCI'
 
 on: 
-  pull_request:
-  
-    types: [closed]
-    
+  push:
     branches: [dev,main]
     
 jobs:
@@ -35,8 +32,8 @@ jobs:
           echo $GITHUB_REF^ 
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all 
-          git --no-pager diff --name-status origin/${GITHUB_HEAD_REF##*/} origin/dev
-          sgd --to origin/${GITHUB_HEAD_REF##*/} --from origin/dev  --output .
+          git --no-pager diff --name-status head head^
+          sgd --to head --from head^  --output .
           cat package/package.xml               
       - name: Print 
         run: |
