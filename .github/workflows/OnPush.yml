@@ -22,7 +22,11 @@ jobs:
           npm install sfdx-cli --global
           sudo npm install sfdx-git-delta@latest -g
       - name: Auth with the DevHub using JWT auth Flow
-        run: 'sfdx force:auth:jwt:grant --clientid 3MVG9Nk1FpUrSQHfmKV.S7cvDKdhvM8FAfbyyfM0255yaP_20wvSYv3MkAgpj5Bsbx4VYAM.88vsPFAT7.JwO --jwtkeyfile server3.key --username raghavendra.sharma@dialpad.com.dialpaddevhub1 -a myConnectedOrg'
+        run: |
+         echo "${SALESFORCE_JWT_SECRET_KEY}" > server3.key
+         sfdx force:auth:jwt:grant --clientid 3MVG9Nk1FpUrSQHfmKV.S7cvDKdhvM8FAfbyyfM0255yaP_20wvSYv3MkAgpj5Bsbx4VYAM.88vsPFAT7.JwO --jwtkeyfile server3.key --username raghavendra.sharma@dialpad.com.dialpaddevhub1 -a myConnectedOrg
+        env:
+         SALESFORCE_JWT_SECRET_KEY: ${{ secrets.KEY }}
       - name: Create scratch org
         run: 'echo scratch org processed'
       
@@ -44,4 +48,3 @@ jobs:
           cat destructiveChanges/destructiveChanges.xml
       
       
-
