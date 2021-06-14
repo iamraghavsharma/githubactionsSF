@@ -1,8 +1,7 @@
 name: 'SalesforceCI'
 
 on: 
-  pull_request:
-    types: [closed]
+  push:
     branches: [dev,main]
     
 jobs:
