@@ -27,6 +27,9 @@ jobs:
       
       - name: Deploy changes to Org
         run: |
+          echo $GITHUB_REF
+          echo $GITHUB_HEAD_REF
+          echo $GITHUB_REF^ 
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all 
           git --no-pager diff --name-status origin/${GITHUB_HEAD_REF##*/} origin/dev
