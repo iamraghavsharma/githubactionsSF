@@ -1,0 +1,47 @@
+name: 'SalesforceCI'
+
+on: 
+  push:
+    branches: [dev,master]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2  
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14' 
+          check-latest: true                     
+      - name: Write the token into a file for Auth URL Authentication
+        run: 'echo force://PlatformCLI::5Aep861NT6Ju45T6F3wrWTgUeIYszM9I0eB9iTEBbILTAmNP6dIsWf.dJ_XuIfi_ArSfF0xsjEmsBlvHwyJVV8a@dialpaddevhub1.my.salesforce.com > token.txt'
+      - name: Install Salesforce CLI
+        run: |
+          node --version
+          git --version
+          npm install sfdx-cli --global
+          sudo npm install sfdx-git-delta@latest -g
+      - name: Auth with the DevHub using JWT auth Flow
+        run: 'sfdx force:auth:jwt:grant --clientid 3MVG9Nk1FpUrSQHfmKV.S7cvDKdhvM8FAfbyyfM0255yaP_20wvSYv3MkAgpj5Bsbx4VYAM.88vsPFAT7.JwO --jwtkeyfile server3.key --username raghavendra.sharma@dialpad.com.dialpaddevhub1 -a myConnectedOrg'
+      - name: Create scratch org
+        run: 'echo scratch org processed'
+      
+      - name: Deploy changes to Org
+        run: |
+          git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+          git fetch --all 
+          git --no-pager diff --name-status origin/${GITHUB_REF##*/} origin/dev
+          sgd --to origin/${GITHUB_REF##*/} --from origin/dev  --output .
+          cat package/package.xml               
+      - name: Print 
+        run: |
+          echo $GITHUB_REF
+          echo $github.ref
+          echo $GITHUB_REF^ 
+          echo "--- package.xml generated with added and modified metadata ---"
+          cat package/package.xml
+          echo "--- destructiveChanges.xml generated with deleted metadata ---"
+          cat destructiveChanges/destructiveChanges.xml
+      
+      
+
