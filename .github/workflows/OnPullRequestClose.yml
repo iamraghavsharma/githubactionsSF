@@ -35,7 +35,7 @@ jobs:
           echo $GITHUB_REF^ 
           echo $GITHUB_SHA  
           
-          git pull $GITHUB_REF
+          git pull ${GITHUB_REF##*/}
           ls
           git --no-pager diff --name-status $GITHUB_SHA   $GITHUB_SHA^
           sgd --to origin/${GITHUB_REF##*/}  --from origin/${GITHUB_REF##*/}^   --output .
