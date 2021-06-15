@@ -1,16 +1,16 @@
 name: 'SalesforceCI-PullRequest closed'
 
 on: 
-  pull_request:
-    types : [closed]
+  push:
     branches: [dev,main]
     
 jobs:
   build:
-    if: (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2  
+        with:
+          fetch-depth: 2
       - uses: actions/setup-node@v2
         with:
           node-version: '14' 
@@ -33,12 +33,12 @@ jobs:
           echo $GITHUB_REF
           echo $GITHUB_HEAD_REF
           echo $GITHUB_REF^ 
+          echo $GITHUB_SHA  
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all 
           ls
-          git --no-pager diff --name-status origin/${GITHUB_HEAD_REF##*/}  origin/${GITHUB_REF##*/} 
-          git --no-pager diff --name-status origin/${GITHUB_REF##*/}  . 
-          sgd --to origin/${GITHUB_HEAD_REF##*/}  --from origin/${GITHUB_REF##*/}   --output .
+          git --no-pager diff --name-status head  head^
+          sgd --to origin/${GITHUB_REF##*/}  --from origin/${GITHUB_REF##*/}^   --output .
           cat package/package.xml               
       - name: Print 
         run: |
