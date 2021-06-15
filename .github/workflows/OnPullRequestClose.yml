@@ -1,11 +1,13 @@
 name: 'SalesforceCI'
 
 on: 
-  push:
+  pull_request:
+    types : [closed]
     branches: [dev,main]
     
 jobs:
   build:
+    if: (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2  
@@ -32,8 +34,8 @@ jobs:
           echo $GITHUB_REF^ 
           git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           git fetch --all 
-          git --no-pager diff --name-status head head^
-          sgd --to head --from head^  --output .
+          git --no-pager diff --name-status origin/${GITHUB_HEAD_REF##*/}  origin/${GITHUB_REF##*/} 
+          sgd --to origin/${GITHUB_HEAD_REF##*/}  --from origin/${GITHUB_REF##*/}   --output .
           cat package/package.xml               
       - name: Print 
         run: |
