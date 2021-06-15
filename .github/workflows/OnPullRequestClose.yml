@@ -1,4 +1,4 @@
-name: 'SalesforceCI-PullRequest closed'
+name: 'SalesforceCI-Push'
 
 on: 
   push:
@@ -34,10 +34,10 @@ jobs:
           echo $GITHUB_HEAD_REF
           echo $GITHUB_REF^ 
           echo $GITHUB_SHA  
-          git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-          git fetch --all 
+          
+          git pull $GITHUB_REF
           ls
-          git --no-pager diff --name-status head  head^
+          git --no-pager diff --name-status $GITHUB_SHA   $GITHUB_SHA^
           sgd --to origin/${GITHUB_REF##*/}  --from origin/${GITHUB_REF##*/}^   --output .
           cat package/package.xml               
       - name: Print 
