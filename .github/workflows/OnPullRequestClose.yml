@@ -32,8 +32,7 @@ jobs:
           echo $GITHUB_HEAD_REF
           echo $GITHUB_REF^ 
           echo $GITHUB_SHA  
-          
-          git pull origin/${GITHUB_REF##*/}
+          git branch ${GITHUB_REF##*/} FETCH_HEAD
           ls
           git --no-pager diff --name-status $GITHUB_SHA   $GITHUB_SHA^              
       - name: Print 
