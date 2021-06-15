@@ -1,4 +1,4 @@
-name: 'SalesforceCI'
+name: 'SalesforceCI-PullRequest closed'
 
 on: 
   pull_request:
@@ -37,6 +37,7 @@ jobs:
           git fetch --all 
           ls
           git --no-pager diff --name-status origin/${GITHUB_HEAD_REF##*/}  origin/${GITHUB_REF##*/} 
+          git --no-pager diff --name-status origin/${GITHUB_REF##*/}  . 
           sgd --to origin/${GITHUB_HEAD_REF##*/}  --from origin/${GITHUB_REF##*/}   --output .
           cat package/package.xml               
       - name: Print 
