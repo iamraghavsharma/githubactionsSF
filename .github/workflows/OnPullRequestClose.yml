@@ -32,9 +32,8 @@ jobs:
           echo $GITHUB_HEAD_REF
           echo $GITHUB_REF^ 
           echo $GITHUB_SHA  
-          git branch ${GITHUB_REF##*/} FETCH_HEAD
           ls
-          git --no-pager diff --name-status $GITHUB_SHA   $GITHUB_SHA^              
+          git --no-pager diff --name-status $GITHUB_SHA^  $GITHUB_SHA              
       - name: Print 
         run: |
           echo $GITHUB_REF
