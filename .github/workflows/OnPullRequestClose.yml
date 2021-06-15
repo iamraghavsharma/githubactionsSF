@@ -21,25 +21,22 @@ jobs:
         run: |
           node --version
           git --version
+          npm install sfdx-cli --global
+          sudo npm install sfdx-git-delta@latest -g
  
       - name: Create scratch org
         run: 'echo scratch org processed'
       
       - name: Deploy changes to Org
         run: |
-          ls
-          echo $GITHUB_REF
-          echo $GITHUB_HEAD_REF
-          echo $GITHUB_REF^ 
-          echo $GITHUB_SHA  
-          ls
-          git --no-pager diff --name-status $GITHUB_SHA^  $GITHUB_SHA              
+          git --no-pager diff --name-status $GITHUB_SHA^  $GITHUB_SHA  
+          sgd --to $GITHUB_SHA --from $GITHUB_SHA^  --output .
+          cat package/package.xml   
       - name: Print 
         run: |
           echo $GITHUB_REF
           echo $GITHUB_HEAD_REF
           echo $GITHUB_REF^ 
-          ls
           echo "--- package.xml generated with added and modified metadata ---"
           cat package/package.xml
           echo "--- destructiveChanges.xml generated with deleted metadata ---"

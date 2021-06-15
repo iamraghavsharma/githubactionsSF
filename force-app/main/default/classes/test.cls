@@ -1,1 +1,1 @@
-//New class
+//New class test
