@@ -25,16 +25,6 @@ jobs:
           sudo npm install sfdx-git-delta@latest -g
       - name: Authorize with DevHub
         run: 'sfdx force:auth:jwt:grant --clientid 3MVG9Nk1FpUrSQHfmKV.S7cvDKdhvM8FAfbyyfM0255yaP_20wvSYv3MkAgpj5Bsbx4VYAM.88vsPFAT7.JwO --jwtkeyfile server3.key --username raghavendra.sharma@dialpad.com.dialpaddevhub1 -a myConnectedOrg'
-      - name: Create scratch org
-        run: 'sfdx force:org:create -f default_configs/default_scratch_def.json -v raghavendra.sharma@dialpad.com.dialpaddevhub1 -a my-scratch'
-      - name: Push source
-        run: 'sfdx force:source:push -u my-scratch'
-      - name: List orgs
-        run: 'sfdx force:org:list --all'
-      - name: Run tests
-        run: 'sfdx force:apex:test:run -u my-scratch --resultformat human --codecoverage'
-      - name: Delete scratch org
-        run: 'sfdx force:org:delete -u my-scratch --noprompt'
       - name: Prepare Delta package
         run: |
           echo $GITHUB_REF
