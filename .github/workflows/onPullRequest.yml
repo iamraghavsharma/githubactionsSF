@@ -23,5 +23,14 @@ jobs:
           sudo npm install sfdx-git-delta@latest -g
       - name: Proess Scratch org
         run: 'echo scratch org processed'
+  notifySlack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify slack
+        env:
+          SLACK_BOT_TOKEN: 'xoxb-32892359269-2272798954928-DX1vg4gNbHflyMQiOzaPoAjB'
+        uses: abinoda/slack-action@master
+        with:
+          args: '{\"channel\":\"[C02782X4NDT]\",\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*The Build was job.status*\"}},{\"type\":\"divider\"},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Ref:* ${{github.ref}}\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Event* : ${{github.event_name}}\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Pull Request:* ${{ github.event.pull_request.title }}\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"*Who :* ${{ github.event.pull_request.user.login }}\"}},{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"<${{ github.event.pull_request._links.html.href }}|View Pull Request>\"}}]}'
  
 
