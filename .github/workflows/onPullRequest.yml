@@ -23,5 +23,14 @@ jobs:
           sudo npm install sfdx-git-delta@latest -g
       - name: Proess Scratch org
         run: 'echo scratch org processed'
+  notifySlack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify slack
+        env:
+          SLACK_BOT_TOKEN: 'xoxb-2249714352531-2242775563030-S0O5pYiWch3HmQ6My88FQE5w'
+        uses: abinoda/slack-action@master
+        with:
+          args: '{\"channel\":\"[C0278ED8MFF]\",\"text\":"Hello"}'
  
 
