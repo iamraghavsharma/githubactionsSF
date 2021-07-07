@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Notify slack
         env:
-          SLACK_BOT_TOKEN: 'xoxb-2249714352531-2242775563030-UA6DjWxiUPXlwewSpt2t2VIG'
+          SLACK_BOT_TOKEN: 'xoxb-2249714352531-2242775563030-nnpDBMPh1ftoW1WYKd3kuLX5'
         uses: abinoda/slack-action@master
         with:
           args: '{\"channel\":\"[C0278ED8MFF]\",\"text\":"Hello"}'
